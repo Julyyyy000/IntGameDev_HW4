@@ -16,9 +16,17 @@ public class PlayerControl : MonoBehaviour
     public float gravityFall = 40f;
     public float jumpLimit = 2f;
 
-    bool jump = false;
+    bool jump1 = false;
+    bool jump2 = false;
+    bool canDoubleJump = false;
+
+    bool canShoot = false;
+
+    public GameObject bullet;
 
     Animator myAnim;
+
+    public GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +43,12 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && grounded)
         {
-            jump = true;
+            jump1 = true;
+            myAnim.SetBool("jumping", true);
+        } else if (Input.GetButtonDown("Jump") && canDoubleJump)
+        {
+            jump2 = true;
+            canDoubleJump = false;
             myAnim.SetBool("jumping", true);
         }
 
@@ -46,31 +59,59 @@ public class PlayerControl : MonoBehaviour
         {
             myAnim.SetBool("walking", false);
         }
+
+        if (canShoot && bullet.activeSelf == false)
+        {
+            Debug.Log(bullet.activeSelf);
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                bullet.transform.position = transform.position;
+                bullet.SetActive(true);
+                bullet.GetComponent<bulletMovement>().direction = "left";
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                bullet.transform.position = transform.position;
+                bullet.SetActive(true);
+                bullet.GetComponent<bulletMovement>().direction = "right";
+            }
+        }
     }
 
     void FixedUpdate()
     {
         float moveSpeed = horizontalMove * speed;
 
-        if (jump)
+        if (jump1)
         {
             myBody.AddForce(Vector2.up * jumpLimit, ForceMode2D.Impulse);
-            jump = false;
+            jump1 = false;
+            canDoubleJump = true;
+        }
+        if (jump2)
+        {
+            myBody.AddForce(Vector2.up * jumpLimit, ForceMode2D.Impulse);
+            jump2 = false;
         }
 
         if (myBody.velocity.y > 0)
         {
             myBody.gravityScale = gravityScale;
+
         } else if (myBody.velocity.y < 0)
         {
             myBody.gravityScale = gravityFall;
-            myAnim.SetBool("jumping", false);
+            if (grounded)
+            {
+                myAnim.SetBool("jumping", false);
+            }
         }
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist);
         Debug.DrawRay(transform.position, Vector2.down,Color.red);
 
-        if (hit.collider != null && hit.transform.name == "ground")
+        if (hit.collider != null && hit.transform.CompareTag("ground"))
         {
             grounded = true;
         }
@@ -80,5 +121,19 @@ public class PlayerControl : MonoBehaviour
         }
 
         myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("bullet"))
+        {
+            Destroy(collision.gameObject);
+            canShoot = true;
+        }
+
+        if (collision.gameObject.name == "NextLevel")
+        {
+            gameManager.GetComponent<GameManager>().nextScene = true;
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public bool nextScene = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,9 +15,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        Debug.Log(nextScene);
+        if (nextScene)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Level2");
         }
     }
 }
