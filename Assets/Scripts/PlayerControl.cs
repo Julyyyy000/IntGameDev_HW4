@@ -36,9 +36,10 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
+            myAnim.SetBool("jumping", true);
         }
 
-        if (horizontalMove > 0.2f || horizontalMove < 0.2f)
+        if (horizontalMove > 0.2f || horizontalMove < -0.2f)
         {
             myAnim.SetBool("walking", true);
         } else
@@ -63,6 +64,7 @@ public class PlayerControl : MonoBehaviour
         } else if (myBody.velocity.y < 0)
         {
             myBody.gravityScale = gravityFall;
+            myAnim.SetBool("jumping", false);
         }
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist);
