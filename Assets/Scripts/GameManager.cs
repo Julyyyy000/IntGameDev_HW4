@@ -37,7 +37,12 @@ public class GameManager : MonoBehaviour
 
         if (player.transform.position.y < -16f)
         {
+            //if game over
             textObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(scene.name);
+            }
         }
     }
 }
