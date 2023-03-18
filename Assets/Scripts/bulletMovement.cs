@@ -6,9 +6,12 @@ public class bulletMovement : MonoBehaviour
 {
     public string direction = "left";
     public float speed = 0;
+    public float maximumWidth = 30f;
+
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -27,9 +30,9 @@ public class bulletMovement : MonoBehaviour
             transform.position = newPos;
         }
 
-        if (newPos.x > 13f || newPos.x < -18f)
+        if (newPos.x > maximumWidth || newPos.x < -maximumWidth)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 

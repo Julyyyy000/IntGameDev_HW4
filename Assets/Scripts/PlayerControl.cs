@@ -20,9 +20,10 @@ public class PlayerControl : MonoBehaviour
     bool jump2 = false;
     bool canDoubleJump = false;
 
-    bool canShoot = false;
+    public bool canShoot = false;
 
-    public GameObject bullet;
+    public GameObject leftBullet;
+    public GameObject rightBullet;
 
     Animator myAnim;
 
@@ -60,21 +61,19 @@ public class PlayerControl : MonoBehaviour
             myAnim.SetBool("walking", false);
         }
 
-        if (canShoot && bullet.activeSelf == false)
+        if (canShoot)
         {
-            Debug.Log(bullet.activeSelf);
+            //Debug.Log(bullet.activeSelf);
             if (Input.GetKeyDown(KeyCode.J))
             {
-                bullet.transform.position = transform.position;
-                bullet.SetActive(true);
-                bullet.GetComponent<bulletMovement>().direction = "left";
+                canShoot = false;
+                Instantiate(leftBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             }
 
             if (Input.GetKeyDown(KeyCode.K))
             {
-                bullet.transform.position = transform.position;
-                bullet.SetActive(true);
-                bullet.GetComponent<bulletMovement>().direction = "right";
+                canShoot = false;
+                Instantiate(rightBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             }
         }
     }
@@ -127,7 +126,6 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            Destroy(collision.gameObject);
             canShoot = true;
         }
 
