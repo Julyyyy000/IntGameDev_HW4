@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour
         {
             if (scene.name == "Level1")
             {
-                SceneManager.LoadScene("Level2");
+                SceneManager.LoadScene("polishLevel2");
             }
-            else if (scene.name == "Level2")
+            else if (scene.name == "polishLevel2")
             {
                 text.text = "Congratulations!";
                 textObject.SetActive(true);
