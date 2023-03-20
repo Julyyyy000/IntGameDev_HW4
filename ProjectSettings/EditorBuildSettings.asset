@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level2.unity
     guid: f80abdc7cd965421ba13caf1935beca7
+  - enabled: 1
+    path: Assets/Scenes/polishLevel2.unity
+    guid: f7335bc1b019442ea8a6dfa9bf83d45f
   m_configObjects: {}
