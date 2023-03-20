@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Scene scene = SceneManager.GetActiveScene();
-        Debug.Log(nextScene);
+        //Debug.Log(nextScene);
         if (nextScene)
         {
             if (scene.name == "Level1")

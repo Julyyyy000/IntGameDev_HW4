@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject leftBullet;
     public GameObject rightBullet;
+    public GameObject particlePrefab;
 
     Animator myAnim;
 
@@ -113,6 +114,7 @@ public class PlayerControl : MonoBehaviour
         if (hit.collider != null && hit.transform.CompareTag("ground"))
         {
             grounded = true;
+            
         }
         else
         {
@@ -132,6 +134,16 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.name == "NextLevel")
         {
             gameManager.GetComponent<GameManager>().nextScene = true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            Debug.Log(collision);
+            GameObject newDust = Instantiate(particlePrefab, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.identity);
+            GameObject.Destroy(newDust, 1f);
         }
     }
 }
