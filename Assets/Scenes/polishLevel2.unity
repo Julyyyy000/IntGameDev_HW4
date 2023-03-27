@@ -2295,6 +2295,7 @@ MonoBehaviour:
   leftBullet: {fileID: 6996863890849230346, guid: 3d50a8fcb0d974d2dabf79500cf2ab34, type: 3}
   rightBullet: {fileID: 1295542851659734019, guid: 153977d9fb09f4dc68d49d363cbe755a, type: 3}
   particlePrefab: {fileID: 4787753992592567160, guid: ca162bb7bd0b840bd8ebf86be783f3bd, type: 3}
+  collectParticlePrefab: {fileID: 4787753992592567160, guid: a7c13fa9841f14e9488b1ba7fc72d34f, type: 3}
   gameManager: {fileID: 496620704}
   walkAudio: {fileID: 8300000, guid: 0281cad7ba33f4677bf3d42742d2ca10, type: 3}
   jumpAudio: {fileID: 8300000, guid: 2713bf62e3113400fad0626cdc060def, type: 3}

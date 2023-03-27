@@ -26,6 +26,8 @@ public class PlayerControl : MonoBehaviour
     public GameObject leftBullet;
     public GameObject rightBullet;
     public GameObject particlePrefab;
+    public GameObject collectParticlePrefab;
+
 
     Animator myAnim;
 
@@ -160,6 +162,7 @@ public class PlayerControl : MonoBehaviour
             if (!canShoot)
             {
                 canShoot = true;
+                Instantiate(collectParticlePrefab, new Vector3(transform.position.x, transform.position.y + 3, 0), Quaternion.identity);
                 myAudio.clip = collectAudio;
                 myAudio.Play();
                 text.SetActive(true);
@@ -177,8 +180,8 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("ground"))
         {
             //Debug.Log(collision);
-            GameObject newDust = Instantiate(particlePrefab, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.identity);
-            GameObject.Destroy(newDust, 1f);
+            Instantiate(particlePrefab, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.identity);
+            //GameObject.Destroy(newDust, 1f);
         }
     }
 
