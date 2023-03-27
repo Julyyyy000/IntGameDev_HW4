@@ -11,10 +11,16 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     TextMeshProUGUI text;
     public GameObject textObject;
+
+    AudioSource myAudio;
+    public AudioClip congratsAudio;
+    public AudioClip gameOverAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         text = textObject.GetComponent<TextMeshProUGUI>();
+        myAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,12 +30,23 @@ public class GameManager : MonoBehaviour
         //Debug.Log(nextScene);
         if (nextScene)
         {
+            
             if (scene.name == "Level1")
             {
+                if (!myAudio.isPlaying)
+                {
+                    myAudio.clip = congratsAudio;
+                    myAudio.Play();
+                } 
                 SceneManager.LoadScene("polishLevel2");
             }
             else if (scene.name == "polishLevel2")
             {
+                if (!myAudio.isPlaying)
+                {
+                    myAudio.clip = congratsAudio;
+                    myAudio.Play();
+                }
                 text.text = "Congratulations!";
                 textObject.SetActive(true);
             }
@@ -38,6 +55,12 @@ public class GameManager : MonoBehaviour
         if (player.transform.position.y < -16f)
         {
             //if game over
+            if (!myAudio.isPlaying)
+            {
+                myAudio.clip = gameOverAudio;
+                myAudio.Play();
+            }
+            
             textObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.R))
             {

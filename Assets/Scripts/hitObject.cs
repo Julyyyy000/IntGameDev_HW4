@@ -11,12 +11,15 @@ public class hitObject : MonoBehaviour
     float minimumPosition;
 
     public float moveSpeed = 1f;
+
+    AudioSource myAudio;
     // Start is called before the first frame update
     void Start()
     {
         maximumPosition = transform.position.y + moveDistance;
         minimumPosition = transform.position.y - moveDistance;
 
+        myAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -37,9 +40,10 @@ public class hitObject : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("shoot"))
         {
+            myAudio.Play();
             Destroy(collision.gameObject);
             //Debug.Log(collision.gameObject);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

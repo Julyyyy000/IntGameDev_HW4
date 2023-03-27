@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class PlayerControl : MonoBehaviour
     public AudioClip collectAudio;
     public AudioClip shootAudio;
 
+    public GameObject text;
     // Start is called before the first frame update
     void Start()
     {
@@ -91,6 +93,7 @@ public class PlayerControl : MonoBehaviour
                 myAudio.clip = shootAudio;
                 myAudio.Play();
                 canShoot = false;
+                text.SetActive(false);
                 Instantiate(leftBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             }
 
@@ -99,6 +102,7 @@ public class PlayerControl : MonoBehaviour
                 myAudio.clip = shootAudio;
                 myAudio.Play();
                 canShoot = false;
+                text.SetActive(false);
                 Instantiate(rightBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             }
         }
@@ -158,6 +162,7 @@ public class PlayerControl : MonoBehaviour
                 canShoot = true;
                 myAudio.clip = collectAudio;
                 myAudio.Play();
+                text.SetActive(true);
             }
         }
 
