@@ -35,11 +35,11 @@ public class hitObject : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("bullet"))
+        if (collision.gameObject.CompareTag("shoot"))
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             //Debug.Log(collision.gameObject);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

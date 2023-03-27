@@ -30,11 +30,18 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject gameManager;
 
+    AudioSource myAudio;
+    public AudioClip walkAudio;
+    public AudioClip jumpAudio;
+    public AudioClip collectAudio;
+    public AudioClip shootAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         myBody = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
+        myAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -47,19 +54,33 @@ public class PlayerControl : MonoBehaviour
         {
             jump1 = true;
             myAnim.SetBool("jumping", true);
+            myAudio.clip = jumpAudio;
+            myAudio.Play();
         } else if (Input.GetButtonDown("Jump") && canDoubleJump)
         {
             jump2 = true;
             canDoubleJump = false;
             myAnim.SetBool("jumping", true);
+            myAudio.clip = jumpAudio;
+            myAudio.Play();
         }
 
         if (horizontalMove > 0.2f || horizontalMove < -0.2f)
         {
             myAnim.SetBool("walking", true);
+            if (!myAudio.isPlaying && !myAnim.GetBool("jumping"))
+            {
+                myAudio.clip = walkAudio;
+                myAudio.Play();
+            }
+
         } else
         {
             myAnim.SetBool("walking", false);
+            if (myAudio.clip == walkAudio)
+            {
+                myAudio.Stop();
+            }
         }
 
         if (canShoot)
@@ -67,12 +88,16 @@ public class PlayerControl : MonoBehaviour
             //Debug.Log(bullet.activeSelf);
             if (Input.GetKeyDown(KeyCode.J))
             {
+                myAudio.clip = shootAudio;
+                myAudio.Play();
                 canShoot = false;
                 Instantiate(leftBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             }
 
             if (Input.GetKeyDown(KeyCode.K))
             {
+                myAudio.clip = shootAudio;
+                myAudio.Play();
                 canShoot = false;
                 Instantiate(rightBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             }
@@ -128,7 +153,12 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            canShoot = true;
+            if (!canShoot)
+            {
+                canShoot = true;
+                myAudio.clip = collectAudio;
+                myAudio.Play();
+            }
         }
 
         if (collision.gameObject.name == "NextLevel")
@@ -141,9 +171,10 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
-            Debug.Log(collision);
+            //Debug.Log(collision);
             GameObject newDust = Instantiate(particlePrefab, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.identity);
             GameObject.Destroy(newDust, 1f);
         }
     }
+
 }
