@@ -33,7 +33,7 @@ public class backgroundMovement : MonoBehaviour
         Vector3 pos = transform.position;
         Vector3 cameraPos = camera.transform.position;
 
-        pos.y = cameraPos.y;
+        //pos.y = cameraPos.y;
 
         if (pos.x <= cameraPos.x - oneAndHalfWidth)
         {
