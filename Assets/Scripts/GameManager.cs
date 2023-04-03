@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     AudioSource myAudio;
     public AudioClip congratsAudio;
     public AudioClip gameOverAudio;
+    bool playedAudio = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,10 +43,11 @@ public class GameManager : MonoBehaviour
             }
             else if (scene.name == "polishLevel2")
             {
-                if (!myAudio.isPlaying)
+                if (!myAudio.isPlaying && !playedAudio)
                 {
                     myAudio.clip = congratsAudio;
                     myAudio.Play();
+                    playedAudio = true;
                 }
                 text.text = "Congratulations!";
                 textObject.SetActive(true);
